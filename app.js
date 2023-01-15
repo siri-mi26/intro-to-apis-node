@@ -27,7 +27,8 @@ app.post("/api/compliments", async (req, res) => {
   const from = process.env.TWILIO_PHONE_NUMBER;
   const body = `${req.body.sender} says: ${req.body.receiver} is ${req.body.compliment}. See more compliments at ${req.headers.referer}`;
   // TODO: Send a message
-  res.json({ success: false });
+  await client.messages.create({to, from, body});
+  res.json({ success: true });
 });
 
 app.listen(port, () => console.log(`Prototype is listening on port ${port}!`));
